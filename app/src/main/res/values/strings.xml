@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Fireball</string>
+    <string name="btnEnviar">Enviar</string>
+    <string name="edtHint">Escribe aqui...</string>
+    <string name="edtHintSala">Escribe la sala</string>
+    <string name="btnAdd">añadir</string>
+</resources>
