@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,24 +22,32 @@ import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private Button btnEnviar;
+    private ImageView btnEnviar;
     private EditText edtMensaje;
     private TextView txvMensaje;
 
-    private String nombreUsuario, nombreSala, chatMensaje, chatNombreUsuario, temp_key;
+    private String nombreUsuario, alias, nombreSala, chatMensaje, chatNombreUsuario, temp_key;
 
     private DatabaseReference root ;
+
+    private FirebaseAuth autenti;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        autenti = FirebaseAuth.getInstance();
+
         edtMensaje = (EditText)findViewById(R.id.edtMensaje);
         txvMensaje = (TextView)findViewById(R.id.txvMensaje);
-        btnEnviar = (Button)findViewById(R.id.btnEnviar);
+        btnEnviar = (ImageView)findViewById(R.id.btnEnviar);
 
-        nombreUsuario = getIntent().getExtras().get("nombreUsuario").toString();
+        //Asi recogemos el email
+        nombreUsuario = autenti.getCurrentUser().getEmail();
+        //nombreUsuario = getIntent().getExtras().get("alias").toString();
+
+        //Recogemos el nombre de la sala
         nombreSala = getIntent().getExtras().get("nombreSala").toString();
 
         setTitle(" Room - " + nombreSala);
@@ -53,9 +64,9 @@ public class ChatActivity extends AppCompatActivity {
 
                 DatabaseReference message_root = root.child(temp_key);
                 Map<String,Object> map2 = new HashMap<String, Object>();
+                //map2.put("nombre", alias);
                 map2.put("nombre", nombreUsuario);
                 map2.put("mensaje", edtMensaje.getText().toString());
-
                 message_root.updateChildren(map2);
 
                 edtMensaje.setText("");
@@ -98,8 +109,8 @@ public class ChatActivity extends AppCompatActivity {
 
         while (i.hasNext()){
 
-            chatMensaje = (String) ((DataSnapshot)i.next()).getValue();
-            chatNombreUsuario = (String) ((DataSnapshot)i.next()).getValue();
+            chatMensaje = (String)((DataSnapshot)i.next()).getValue();
+            chatNombreUsuario = (String)((DataSnapshot)i.next()).getValue();
 
             txvMensaje.append(chatNombreUsuario + " : " + chatMensaje + " \n");
         }
