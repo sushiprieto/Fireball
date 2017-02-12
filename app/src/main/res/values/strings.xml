@@ -4,4 +4,13 @@
     <string name="edtHint">Escribe aqui...</string>
     <string name="edtHintSala">Escribe la sala</string>
     <string name="btnAdd">añadir</string>
+    <string name="edtEmail">Introduce su email</string>
+    <string name="edtEmailConfirm">Confirme su email</string>
+    <string name="edtAlias">Añada su alias</string>
+    <string name="edtPass">Introduce su contraseña</string>
+    <string name="btnRegistro">Registrar</string>
+    <string name="txvYaRegistrado">¿Ya registrado? Inicia sesión aquí.</string>
+    <string name="txvNoRegistrado">¿No está registrado? Regístrese aquí.</string>
+    <string name="txvNoCuenta">¿No tiene una cuenta? Regístrese aqui</string>
+    <string name="txvOlvido">¿Olvidó su contraseña?</string>
 </resources>

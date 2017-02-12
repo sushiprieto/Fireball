@@ -10,43 +10,65 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.trabajo.carlos.fireball.ChatActivity">
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btnEnviar"
-        android:text="@string/btnEnviar"
+        android:id="@+id/linear"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/edtMensaje"
-        android:hint="@string/edtHint"
-        android:layout_alignTop="@+id/btnEnviar"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/btnEnviar"
-        android:layout_toStartOf="@+id/btnEnviar" />
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:id="@+id/btnEmoji"
+            android:layout_gravity="center"
+            android:src="@drawable/smiley"/>
+
+        <EditText
+            android:layout_width="237dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtMensaje"
+            android:hint="@string/edtHint"
+            android:layout_weight="1.02" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnEnviar"
+            android:layout_gravity="center"
+            android:src="@android:drawable/ic_menu_send" />
+
+    </LinearLayout>
+
+    <!--<ListView
+        android:id="@+id/lsvMensajes"
+        android:dividerHeight="16dp"
+        android:divider="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/linear"></ListView>-->
 
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scvConver"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/btnEnviar"
-        android:layout_alignRight="@+id/btnEnviar"
-        android:layout_alignEnd="@+id/btnEnviar">
+        android:layout_above="@+id/linear">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textColor="@color/colorPrimary"
             android:id="@+id/txvMensaje"
             android:padding="15dp"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+
     </ScrollView>
 
 </RelativeLayout>
