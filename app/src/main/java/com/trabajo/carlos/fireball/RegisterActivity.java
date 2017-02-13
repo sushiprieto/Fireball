@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,17 +36,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         progressDialog = new ProgressDialog(this);
 
         autenti = FirebaseAuth.getInstance();
-        if (autenti.getCurrentUser() != null){
+        /**if (autenti.getCurrentUser() != null){
 
             finish();
             startActivity(new Intent(getApplicationContext(), RoomActivity.class));
 
-        }
+        }**/
 
         edtEmail = (EditText)findViewById(R.id.edtEmail);
         edtEmailConfi = (EditText)findViewById(R.id.edtEmailConfirm);
         edtPass = (EditText)findViewById(R.id.edtPassword);
-
 
         txvSigIn = (TextView)findViewById(R.id.txvSignIn);
 
@@ -64,7 +64,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if (view == txvSigIn){
-            startActivity(new Intent(this, LoginActivity.class));
+            //startActivity(new Intent(this, LoginActivity.class));
+            finish();
         }
 
     }
@@ -101,8 +102,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                     if (task.isSuccessful()){
 
+                        //startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         finish();
-                        startActivity(new Intent(getApplicationContext(), RoomActivity.class));
 
                     }else {
 
@@ -123,7 +124,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         }
 
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

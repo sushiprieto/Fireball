@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Fireball</string>
+    <string name="title_activity_room">Fireball</string>
+    <string name="title_activity_login">Registro</string>
     <string name="btnEnviar">Enviar</string>
     <string name="edtHint">Escribe aqui...</string>
     <string name="edtHintSala">Escribe la sala</string>
@@ -13,4 +15,9 @@
     <string name="txvNoRegistrado">¿No está registrado? Regístrese aquí.</string>
     <string name="txvNoCuenta">¿No tiene una cuenta? Regístrese aqui</string>
     <string name="txvOlvido">¿Olvidó su contraseña?</string>
+    <string name="btnAtras"><![CDATA[<< Atras]]></string>
+    <string name="action_logout">Cerrar sesión</string>
+    <string name="action_ajustes">Ajustes cuenta</string>
+    <string name="action_nuevasala">Nueva sala</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>

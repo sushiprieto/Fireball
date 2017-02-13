@@ -1,10 +1,13 @@
 package com.trabajo.carlos.fireball;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,48 +34,67 @@ import java.util.Set;
 
 public class RoomActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private Button  btnAdd, btnLogout;
+    private Button  btnAdd;
     private EditText edtSala;
     private ListView lsvSalas;
-    private TextView txvShowAlias;
+    //private TextView txvShowAlias;
 
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> listadoSalas = new ArrayList<>();
 
-    private String nombreUsuario, alias;
+    private String alias;
 
     private DatabaseReference root = FirebaseDatabase.getInstance().getReference().getRoot();
 
     private FirebaseAuth autenti;
     private FirebaseUser usuario;
+    private FirebaseAuth.AuthStateListener authListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_room);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
 
         autenti = FirebaseAuth.getInstance();
 
         btnAdd = (Button)findViewById(R.id.btnAdd);
-        btnLogout = (Button)findViewById(R.id.btnLogOut);
         edtSala = (EditText)findViewById(R.id.edtSala);
         lsvSalas = (ListView)findViewById(R.id.lsvSalas);
-        txvShowAlias = (TextView)findViewById(R.id.txvShowAlias);
+        //txvShowAlias = (TextView)findViewById(R.id.txvShowAlias);
 
         //Recogemos el emal por si queremos trabajar con el
         usuario = autenti.getCurrentUser();
-        txvShowAlias.setText(usuario.getEmail());
+        //txvShowAlias.setText(usuario.getEmail());
+
+        setTitle(usuario.getEmail());
 
         //alias = getIntent().getExtras().get("alias").toString();
         //txvShowAlias.setText(alias);
 
+        //get current user
+        //final FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+
+        authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser usuario = firebaseAuth.getCurrentUser();
+                if (usuario == null) {
+                    // user auth state is changed - user is null
+                    // launch login activity
+                    startActivity(new Intent(RoomActivity.this, LoginActivity.class));
+                    finish();
+                }
+            }
+        };
+
         arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, listadoSalas);
         lsvSalas.setAdapter(arrayAdapter);
 
-        //pedirNombreSusuario();
-
         btnAdd.setOnClickListener(this);
-        btnLogout.setOnClickListener(this);
 
         root.addValueEventListener(new ValueEventListener() {
             @Override
@@ -100,46 +123,15 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         lsvSalas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                //Toast.makeText(RoomActivity.this, txvShowAlias.getText().toString(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
                 intent.putExtra("nombreSala", ((TextView)view).getText().toString());
-                intent.putExtra("nombreUsuario", nombreUsuario);
-                //intent.putExtra("alias", alias);
+                //intent.putExtra("nombreUsuario", nombreUsuario);
+                intent.putExtra("alias2", alias);
                 startActivity(intent);
 
             }
         });
-
-    }
-
-    private void pedirNombreSusuario() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Introduce nombre:");
-
-        final EditText edtNombre = new EditText(this);
-
-        builder.setView(edtNombre);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                nombreUsuario = edtNombre.getText().toString();
-
-            }
-        });
-
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                dialogInterface.cancel();
-                pedirNombreSusuario();
-
-            }
-        });
-
-        builder.show();
 
     }
 
@@ -148,21 +140,79 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
 
         if (view == btnAdd){
 
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put(edtSala.getText().toString(), "");
-            root.updateChildren(map);
+            if (TextUtils.isEmpty(edtSala.getText())){
 
-            edtSala.setText("");
+                Toast.makeText(this, "Por favor inserte una sala", Toast.LENGTH_SHORT).show();
+
+            }else{
+
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put(edtSala.getText().toString(), "");
+                root.updateChildren(map);
+
+                edtSala.setText("");
+
+                edtSala.setVisibility(View.GONE);
+                btnAdd.setVisibility(View.GONE);
+
+            }
 
         }
 
-        if (view == btnLogout){
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_ajuste) {
+
+
+
+        }else if (id == R.id.action_logout){
 
             autenti.signOut();
             finish();
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 
+        }else if (id == R.id.action_nuevasala){
+
+            edtSala.setVisibility(View.VISIBLE);
+            btnAdd.setVisibility(View.VISIBLE);
+
         }
 
+        return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        autenti.addAuthStateListener(authListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (authListener != null) {
+            autenti.removeAuthStateListener(authListener);
+        }
+    }
+
 }

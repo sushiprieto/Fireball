@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +21,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private Button btnLogeo;
     private EditText edtEmailLog, edtPassLog, edtAlias;
-    private TextView txvSignUp;
+    private TextView txvSignUp, txvRecPass;
 
     private ProgressDialog progressDialog;
 
@@ -31,28 +30,37 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+
 
         progressDialog = new ProgressDialog(this);
 
         autenti = FirebaseAuth.getInstance();
         if (autenti.getCurrentUser() != null){
 
-            finish();
             startActivity(new Intent(getApplicationContext(), RoomActivity.class));
+            finish();
 
         }
 
+        setContentView(R.layout.activity_login);
+
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+
         edtEmailLog = (EditText)findViewById(R.id.edtEmailLog);
         edtPassLog = (EditText)findViewById(R.id.edtPasswordLog);
-        //edtAlias = (EditText)findViewById(R.id.edtAlias);
+        edtAlias = (EditText)findViewById(R.id.edtAlias);
 
         txvSignUp = (TextView)findViewById(R.id.txvSignUp);
+        txvRecPass = (TextView)findViewById(R.id.txvRecPass);
 
         btnLogeo = (Button)findViewById(R.id.btnLogeo);
 
+        autenti = FirebaseAuth.getInstance();
+
         btnLogeo.setOnClickListener(this);
         txvSignUp.setOnClickListener(this);
+        txvRecPass.setOnClickListener(this);
 
     }
 
@@ -63,9 +71,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             userLogin();
         }
 
+        if (view == txvRecPass){
+            startActivity(new Intent(LoginActivity.this, ResetpassActivity.class));
+        }
+
         if (view == txvSignUp){
-            finish();
-            startActivity(new Intent(this, RegisterActivity.class));
+            //finish();
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         }
 
     }
@@ -73,8 +85,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void userLogin() {
 
         String email = edtEmailLog.getText().toString().trim();
-        String password = edtPassLog.getText().toString().trim();
-        //final String alias = edtAlias.getText().toString().trim();
+        final String password = edtPassLog.getText().toString().trim();
+        final String alias = edtAlias.getText().toString().trim();
 
         //Comprobamos si el correo o la contraseña esta vacio
         if (TextUtils.isEmpty(email)){
@@ -95,12 +107,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 if (task.isSuccessful()){
 
-                    finish();
                     Intent envioAlias = new Intent(getApplicationContext(), RoomActivity.class);
                     //Intent envioAlias2 = new Intent(getApplicationContext(), ChatActivity.class);
+                    // TODO: 13/02/2017 Arreglar envio alias 
                     //envioAlias.putExtra("alias", alias);
                     //envioAlias2.putExtra("alias2", alias);
                     startActivity(envioAlias);
+                    finish();
 
                 }else {
 
