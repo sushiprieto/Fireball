@@ -42,7 +42,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> listadoSalas = new ArrayList<>();
 
-    private String alias;
+    private String alias = "";
 
     private DatabaseReference root = FirebaseDatabase.getInstance().getReference().getRoot();
 
@@ -57,8 +57,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
+        //Recogemos la isntancia de la autentificacion
         autenti = FirebaseAuth.getInstance();
 
         btnAdd = (Button)findViewById(R.id.btnAdd);
@@ -66,16 +65,21 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         lsvSalas = (ListView)findViewById(R.id.lsvSalas);
         //txvShowAlias = (TextView)findViewById(R.id.txvShowAlias);
 
-        //Recogemos el emal por si queremos trabajar con el
+        //Recogemos el usuario actual
         usuario = autenti.getCurrentUser();
         //txvShowAlias.setText(usuario.getEmail());
 
-        setTitle(usuario.getEmail());
-
+        // TODO: 13/02/2017 Al salir de la app no guarda el alias
+        //Recogemos el alias
         //alias = getIntent().getExtras().get("alias").toString();
+
+        //Establecemos el titulo de la actividad
+        setTitle(usuario.getEmail());
+        //setTitle(alias);
+
         //txvShowAlias.setText(alias);
 
-        //get current user
+        //Cogemos el usuario actual
         //final FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
 
         authListener = new FirebaseAuth.AuthStateListener() {
@@ -91,11 +95,13 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
 
+        //Creamos la lista de salas
         arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, listadoSalas);
         lsvSalas.setAdapter(arrayAdapter);
 
         btnAdd.setOnClickListener(this);
 
+        //Rellenamos la lista
         root.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -120,10 +126,11 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        //Método onclick de los elementos de la lista
         lsvSalas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Toast.makeText(RoomActivity.this, txvShowAlias.getText().toString(), Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
                 intent.putExtra("nombreSala", ((TextView)view).getText().toString());
                 //intent.putExtra("nombreUsuario", nombreUsuario);
@@ -140,6 +147,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
 
         if (view == btnAdd){
 
+            //Comprobamos que el campo no esté vacio
             if (TextUtils.isEmpty(edtSala.getText())){
 
                 Toast.makeText(this, "Por favor inserte una sala", Toast.LENGTH_SHORT).show();

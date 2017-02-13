@@ -35,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         progressDialog = new ProgressDialog(this);
 
+        //Cogemos la instancia de la autentificacion
         autenti = FirebaseAuth.getInstance();
         /**if (autenti.getCurrentUser() != null){
 
@@ -70,6 +71,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    /**
+     * Metodo que registra un usuario mediante el email y la contraseña
+     */
     private void registrarUsuario() {
 
         //Recogemos los datos de los edittexts
@@ -77,14 +81,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String emailConfirm = edtEmailConfi.getText().toString().trim();
         String password = edtPass.getText().toString().trim();
 
-        //Comprobamos si el correo o la contraseña esta vacio
+        //Comprobamos si el correo o la contraseña estan vacio
         if (TextUtils.isEmpty(email) && TextUtils.isEmpty(emailConfirm)){
 
             Toast.makeText(this, "Por favor inserte email", Toast.LENGTH_SHORT).show();
             return;
 
         }
-
         if (TextUtils.isEmpty(password)){
 
             Toast.makeText(this, "Por favor inserte contraseña", Toast.LENGTH_SHORT).show();

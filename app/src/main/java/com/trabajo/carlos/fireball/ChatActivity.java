@@ -59,17 +59,18 @@ public class ChatActivity extends AppCompatActivity {
         txvMensaje = (TextView)findViewById(R.id.txvMensaje);
         btnEnviar = (ImageView)findViewById(R.id.btnEnviar);
 
-        //Asi recogemos el email
+        //recogemos el alias
         alias = autenti.getCurrentUser().getEmail();
         //alias = getIntent().getExtras().get("alias2").toString();
 
         //Recogemos el nombre de la sala
         nombreSala = getIntent().getExtras().get("nombreSala").toString();
 
-        setTitle(" Room - " + nombreSala);
+        setTitle(" Sala - " + nombreSala);
 
         root = FirebaseDatabase.getInstance().getReference().child(nombreSala);
 
+        //Método que envia un mensaje
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +81,8 @@ public class ChatActivity extends AppCompatActivity {
 
                 DatabaseReference message_root = root.child(temp_key);
                 Map<String,Object> map2 = new HashMap<String, Object>();
+
+                //Esto es lo que escribimos en la vista
                 //map2.put("nombre", alias);
                 map2.put("nombre", alias);
                 map2.put("mensaje", edtMensaje.getText().toString());
@@ -119,6 +122,10 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * @param dataSnapshot
+     */
     private void append_chat_conversation(DataSnapshot dataSnapshot) {
 
         Iterator i = dataSnapshot.getChildren().iterator();

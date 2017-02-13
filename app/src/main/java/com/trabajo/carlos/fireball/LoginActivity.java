@@ -31,9 +31,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         progressDialog = new ProgressDialog(this);
 
+        //Cogemos la instancia de la autentificacion y comprobamos que el usuario no sea nulo
         autenti = FirebaseAuth.getInstance();
         if (autenti.getCurrentUser() != null){
 
@@ -42,10 +42,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
 
+        //Ahora ya cargamos la vista
         setContentView(R.layout.activity_login);
-
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
         edtEmailLog = (EditText)findViewById(R.id.edtEmailLog);
         edtPassLog = (EditText)findViewById(R.id.edtPasswordLog);
@@ -82,6 +80,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    /**
+     * Metodo que logea un usuario mediante el email y la contraseña
+     * OPCIONAL: recogemos un alias para mostrar mas adelante
+     */
     private void userLogin() {
 
         String email = edtEmailLog.getText().toString().trim();
@@ -93,12 +95,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, "Por favor inserte email", Toast.LENGTH_SHORT).show();
             return;
         }
-
         if (TextUtils.isEmpty(password)){
             Toast.makeText(this, "Por favor inserte contraseña", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        //Hacemos el logeo
         autenti.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -107,10 +109,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 if (task.isSuccessful()){
 
+                    //Creamos un intent con un putExtra para enviar el dato del alias
                     Intent envioAlias = new Intent(getApplicationContext(), RoomActivity.class);
                     //Intent envioAlias2 = new Intent(getApplicationContext(), ChatActivity.class);
                     // TODO: 13/02/2017 Arreglar envio alias 
-                    //envioAlias.putExtra("alias", alias);
+                    envioAlias.putExtra("alias", alias);
                     //envioAlias2.putExtra("alias2", alias);
                     startActivity(envioAlias);
                     finish();
@@ -124,6 +127,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
+        //Le mostramos un mensaje de que se esta iniciando sesión
         progressDialog.setMessage("Iniciando sesión...");
         progressDialog.show();
 
