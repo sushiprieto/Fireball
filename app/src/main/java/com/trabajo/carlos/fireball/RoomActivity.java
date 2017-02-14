@@ -186,7 +186,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_ajuste) {
 
-
+            startActivity(new Intent(getApplicationContext(), AjustesActivity.class));
 
         }else if (id == R.id.action_logout){
 

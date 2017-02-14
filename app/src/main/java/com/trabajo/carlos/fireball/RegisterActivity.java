@@ -2,6 +2,7 @@ package com.trabajo.carlos.fireball;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,16 +14,23 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.trabajo.carlos.fireball.utils.ProgressGenerator;
+
+import com.dd.processbutton.iml.ActionProcessButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, ProgressGenerator.OnCompleteListener{
 
-    private Button btnRegistro;
+   // private Button btnRegistro;
     private EditText edtEmail, edtEmailConfi, edtPass;
     private TextView txvSigIn;
+
+    private ActionProcessButton btnRegistroGuay;
+    private ProgressGenerator progressGenerator;
+    public static final String EXTRAS_ENDLESS_MODE = "EXTRAS_ENDLESS_MODE";
 
     private ProgressDialog progressDialog;
 
@@ -50,18 +58,53 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         txvSigIn = (TextView)findViewById(R.id.txvSignIn);
 
-        btnRegistro = (Button)findViewById(R.id.btnRegistro);
+        //btnRegistro = (Button)findViewById(R.id.btnRegistro);
+        btnRegistroGuay = (ActionProcessButton)findViewById(R.id.btnRegistro);
 
-        btnRegistro.setOnClickListener(this);
+        //btnRegistro.setOnClickListener(this);
+        btnRegistroGuay.setOnClickListener(this);
         txvSigIn.setOnClickListener(this);
+
+        progressGenerator = new ProgressGenerator(this);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null && extras.getBoolean(EXTRAS_ENDLESS_MODE)) {
+            btnRegistroGuay.setMode(ActionProcessButton.Mode.ENDLESS);
+        } else {
+            btnRegistroGuay.setMode(ActionProcessButton.Mode.PROGRESS);
+        }
+
+        //btnRegistroGuay.setMode(ActionProcessButton.Mode.PROGRESS);
+
+        // no progress
+        //btnRegistroGuay.setProgress(0);
+        // progressDrawable cover 50% of button width, progressText is shown
+        //btnRegistroGuay.setProgress(50);
+        // progressDrawable cover 75% of button width, progressText is shown
+        //btnRegistroGuay.setProgress(75);
+        // completeColor & completeText is shown
+        //btnRegistroGuay.setProgress(100);
+
+        // you can display endless google like progress indicator
+        //btnRegistroGuay.setMode(ActionProcessButton.Mode.ENDLESS);
+        // set progress > 0 to start progress indicator animation
+        //btnRegistroGuay.setProgress(1);
 
     }
 
-    @Override
+        @Override
     public void onClick(View view) {
 
-        if (view == btnRegistro){
-            registrarUsuario();
+
+
+        if (view == btnRegistroGuay){
+
+            progressGenerator.start(btnRegistroGuay);
+            btnRegistroGuay.setEnabled(false);
+            edtEmail.setEnabled(false);
+            edtEmailConfi.setEnabled(false);
+            edtPass.setEnabled(false);
+
+
         }
 
         if (view == txvSigIn){
@@ -105,21 +148,26 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                     if (task.isSuccessful()){
 
+
+
                         //startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         finish();
 
                     }else {
 
                         Toast.makeText(RegisterActivity.this, "No se pudo registrar...", Toast.LENGTH_SHORT).show();
+                        //progressDialog.dismiss();
 
                     }
 
                 }
             });
 
+
+
             //Le indicamos un mensaje de que se esta registrando
-            progressDialog.setMessage("Registrando usuario...");
-            progressDialog.show();
+            //progressDialog.setMessage("Registrando usuario...");
+            //progressDialog.show();
 
         }else{
 
@@ -132,5 +180,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onComplete() {
+
+        registrarUsuario();
+
     }
 }

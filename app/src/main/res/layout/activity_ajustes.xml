@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_ajustes"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="#F1FDFF"
+    tools:context="com.trabajo.carlos.fireball.AjustesActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <!-- Layout cambiar correo -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearEmail"
+                android:orientation="vertical"
+                android:background="#B1F5FF"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cambiar email:"
+                    android:textColor="@color/colorPrimary"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edtCambiaEmail"
+                    android:hint="Introduzca su email"
+                    android:inputType="textEmailAddress"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:layout_margin="10dp"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnCambiaEmail"
+                    android:text="Cambiar"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp" />
+
+            </LinearLayout>
+
+            <!-- Layout cambiar contraseña -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearPass"
+                android:orientation="vertical"
+                android:background="#B1F5FF"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cambiar contraseña:"
+                    android:textColor="@color/colorPrimary"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="200dp"
+                    android:id="@+id/edtCambiaPass"
+                    android:hint="Nueva contraseña"
+                    android:inputType="textPassword"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:layout_margin="10dp"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnCambiaPass"
+                    android:text="Cambiar"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"/>
+
+            </LinearLayout>
+
+            <!-- Layout borrar usuario -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearBorrarUser"
+                android:orientation="vertical"
+                android:background="#B1F5FF"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Eliminar usuario:"
+                    android:textColor="@color/colorPrimary"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnBorrarUser"
+                    android:text="Eliminar usuario"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
