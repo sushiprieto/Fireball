@@ -33,14 +33,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cambiar email:"
+                    android:text="@string/txvCambiaEmail"
                     android:textColor="@color/colorPrimary"/>
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/edtCambiaEmail"
-                    android:hint="Introduzca su email"
+                    android:hint="@string/edtEmail"
                     android:inputType="textEmailAddress"
                     android:layout_gravity="center"
                     android:textAlignment="center"
@@ -50,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/btnCambiaEmail"
-                    android:text="Cambiar"
+                    android:text="@string/btnCambiar"
                     android:layout_gravity="center"
                     android:layout_margin="10dp" />
 
@@ -69,7 +69,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cambiar contraseña:"
+                    android:text="@string/txvCambiaPass"
                     android:textColor="@color/colorPrimary"/>
 
                 <EditText
@@ -77,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:maxWidth="200dp"
                     android:id="@+id/edtCambiaPass"
-                    android:hint="Nueva contraseña"
+                    android:hint="@string/edtCambiaPass"
                     android:inputType="textPassword"
                     android:layout_gravity="center"
                     android:textAlignment="center"
@@ -87,7 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/btnCambiaPass"
-                    android:text="Cambiar"
+                    android:text="@string/btnCambiar"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"/>
 
@@ -106,14 +106,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Eliminar usuario:"
+                    android:text="@string/txvBorrar"
                     android:textColor="@color/colorPrimary"/>
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/btnBorrarUser"
-                    android:text="Eliminar usuario"
+                    android:text="@string/btnBorrarUser"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"/>
 

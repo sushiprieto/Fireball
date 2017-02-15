@@ -1,23 +1,44 @@
 <resources>
-    <string name="app_name">Fireball</string>
-    <string name="title_activity_room">Fireball</string>
-    <string name="title_activity_login">Registro</string>
+
+    //Buttons
     <string name="btnEnviar">Enviar</string>
-    <string name="edtHint">Escribe aqui...</string>
-    <string name="edtHintSala">Escribe la sala</string>
     <string name="btnAdd">añadir</string>
-    <string name="edtEmail">Introduce su email</string>
-    <string name="edtEmailConfirm">Confirme su email</string>
-    <string name="edtAlias">Añada su alias</string>
-    <string name="edtPass">Introduce su contraseña</string>
     <string name="btnRegistro">Registrar</string>
+    <string name="btnAtras"><![CDATA[<< Atras]]></string>
+    <string name="btnLogeo">Iniciar sesión</string>
+    <string name="btnCambiar">Cambiar</string>
+    <string name="btnBorrarUser">Eliminar usuario</string>
+    <string name="btnReinicioPass">Reiniciar contraseña</string>
+
+    //TextViews
     <string name="txvYaRegistrado">¿Ya registrado? Inicia sesión aquí.</string>
     <string name="txvNoRegistrado">¿No está registrado? Regístrese aquí.</string>
     <string name="txvNoCuenta">¿No tiene una cuenta? Regístrese aqui</string>
     <string name="txvOlvido">¿Olvidó su contraseña?</string>
-    <string name="btnAtras"><![CDATA[<< Atras]]></string>
+    <string name="txvLogin">LOGIN USUARIO</string>
+    <string name="txvRegistro">REGISTRO USUARIO</string>
+    <string name="txvCambiaEmail">Cambiar email:</string>
+    <string name="txvCambiaPass">Cambiar contraseña:</string>
+    <string name="txvBorrar">Eliminar usuario:</string>
+    <string name="txvReinicioPass">REINICIO CONTRASEÑA</string>
+    <string name="txvInstrucciones">Introduce el email con el que te registraste, te enviaremos las instrucciones.</string>
+
+    //EditTexts
+    <string name="edtHint">Escribe aqui...</string>
+    <string name="edtHintSala">Escribe la sala</string>
+    <string name="edtCambiaPass">Nueva contraseña</string>
+    <string name="edtEmail">Introduce su email</string>
+    <string name="edtEmailConfirm">Confirme su email</string>
+    <string name="edtAlias">Añada su alias</string>
+    <string name="edtPass">Introduce su contraseña</string>
+
+    //Actions and Titles
+    <string name="app_name">Fireball</string>
+    <string name="title_activity_room">Fireball</string>
+    <string name="title_activity_login">Registro</string>
+    <string name="title_activity_main">MainActivity</string>
     <string name="action_logout">Cerrar sesión</string>
     <string name="action_ajustes">Ajustes cuenta</string>
     <string name="action_nuevasala">Nueva sala</string>
-    <string name="title_activity_main">MainActivity</string>
+
 </resources>

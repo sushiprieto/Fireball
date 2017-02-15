@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,7 +33,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LOGIN USUARIO"
+                android:text="@string/txvLogin"
                 android:layout_marginBottom="20dp"
                 android:textSize="30sp"
                 android:textColor="@color/colorAccent"
@@ -67,13 +68,28 @@
                 android:textAlignment="center"
                 android:layout_margin="5dp"/>
 
-            <Button
+            <!--<Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:id="@+id/btnLogeo"
                 android:background="@color/colorAccent"
-                android:text="Iniciar sesión"/>
+                android:text="Iniciar sesión"/>-->
+
+            <com.dd.processbutton.iml.ActionProcessButton
+                android:id="@+id/btnLogeo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="@string/btnLogeo"
+                custom:pb_colorComplete="@color/green_complete"
+                custom:pb_colorNormal="@color/colorAccent"
+                custom:pb_colorPressed="@color/blue_pressed"
+                custom:pb_colorProgress="@color/purple_progress"
+                custom:pb_textComplete="Logueado"
+                custom:pb_textProgress="Iniciando sesión"
+                custom:pb_textError="Error"
+                custom:pb_colorError="@color/red_error" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -88,7 +104,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txvSignUp"
-
                 android:layout_gravity="center"
                 android:textColor="@color/white"
                 android:text="@string/txvNoRegistrado"/>

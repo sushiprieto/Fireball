@@ -32,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private ProgressGenerator progressGenerator;
     public static final String EXTRAS_ENDLESS_MODE = "EXTRAS_ENDLESS_MODE";
 
-    private ProgressDialog progressDialog;
+    //private ProgressDialog progressDialog;
 
     private FirebaseAuth autenti;
 
@@ -41,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        progressDialog = new ProgressDialog(this);
+        //progressDialog = new ProgressDialog(this);
 
         //Cogemos la instancia de la autentificacion
         autenti = FirebaseAuth.getInstance();
@@ -94,8 +94,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         @Override
     public void onClick(View view) {
 
-
-
         if (view == btnRegistroGuay){
 
             progressGenerator.start(btnRegistroGuay);
@@ -103,7 +101,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             edtEmail.setEnabled(false);
             edtEmailConfi.setEnabled(false);
             edtPass.setEnabled(false);
-
 
         }
 
@@ -148,8 +145,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                     if (task.isSuccessful()){
 
-
-
                         //startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         finish();
 
@@ -162,8 +157,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                 }
             });
-
-
 
             //Le indicamos un mensaje de que se esta registrando
             //progressDialog.setMessage("Registrando usuario...");
@@ -182,6 +175,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onResume();
     }
 
+    /**
+     * Metodo para cuando se acabe la animacion del botón
+     */
     @Override
     public void onComplete() {
 

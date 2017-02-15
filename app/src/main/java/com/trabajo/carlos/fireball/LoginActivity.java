@@ -12,18 +12,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.trabajo.carlos.fireball.utils.ProgressGenerator;
+import com.dd.processbutton.iml.ActionProcessButton;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, ProgressGenerator.OnCompleteListener{
 
-    private Button btnLogeo;
+    //private Button btnLogeo;
     private EditText edtEmailLog, edtPassLog, edtAlias;
     private TextView txvSignUp, txvRecPass;
 
-    private ProgressDialog progressDialog;
+    //private ProgressDialog progressDialog;
+
+    private ActionProcessButton btnRegistroGuay;
+    private ProgressGenerator progressGenerator;
+    public static final String EXTRAS_ENDLESS_MODE = "EXTRAS_ENDLESS_MODE";
 
     private FirebaseAuth autenti;
 
@@ -31,7 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        progressDialog = new ProgressDialog(this);
+        //progressDialog = new ProgressDialog(this);
 
         //Cogemos la instancia de la autentificacion y comprobamos que el usuario no sea nulo
         autenti = FirebaseAuth.getInstance();
@@ -52,11 +59,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         txvSignUp = (TextView)findViewById(R.id.txvSignUp);
         txvRecPass = (TextView)findViewById(R.id.txvRecPass);
 
-        btnLogeo = (Button)findViewById(R.id.btnLogeo);
+        //btnLogeo = (Button)findViewById(R.id.btnLogeo);
+        btnRegistroGuay = (ActionProcessButton)findViewById(R.id.btnLogeo);
 
         autenti = FirebaseAuth.getInstance();
 
-        btnLogeo.setOnClickListener(this);
+        progressGenerator = new ProgressGenerator(this);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null && extras.getBoolean(EXTRAS_ENDLESS_MODE)) {
+            btnRegistroGuay.setMode(ActionProcessButton.Mode.ENDLESS);
+        } else {
+            btnRegistroGuay.setMode(ActionProcessButton.Mode.PROGRESS);
+        }
+
+        //btnLogeo.setOnClickListener(this);
+        btnRegistroGuay.setOnClickListener(this);
         txvSignUp.setOnClickListener(this);
         txvRecPass.setOnClickListener(this);
 
@@ -65,8 +82,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
 
-        if (view == btnLogeo){
-            userLogin();
+        if (view == btnRegistroGuay){
+
+            progressGenerator.start(btnRegistroGuay);
+            btnRegistroGuay.setEnabled(false);
+            edtEmailLog.setEnabled(false);
+            edtPassLog.setEnabled(false);
+
         }
 
         if (view == txvRecPass){
@@ -105,7 +127,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
-                progressDialog.dismiss();
+                //progressDialog.dismiss();
 
                 if (task.isSuccessful()){
 
@@ -128,8 +150,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
 
         //Le mostramos un mensaje de que se esta iniciando sesión
-        progressDialog.setMessage("Iniciando sesión...");
-        progressDialog.show();
+        //progressDialog.setMessage("Iniciando sesión...");
+        //progressDialog.show();
+
+    }
+
+    /**
+     * Metodo para cuando se complete la animacion del botón
+     */
+    @Override
+    public void onComplete() {
+
+        userLogin();
 
     }
 }
