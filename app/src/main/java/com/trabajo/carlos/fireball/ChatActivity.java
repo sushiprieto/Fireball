@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,7 +28,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private ImageView btnEnviar;
     private EditText edtMensaje;
-    private TextView txvMensaje;
+    private TextView txvMensaje, txvUser;
 
     private String alias, nombreSala, chatMensaje, chatNombreUsuario, temp_key;
 
@@ -57,6 +59,7 @@ public class ChatActivity extends AppCompatActivity {
 
         edtMensaje = (EditText)findViewById(R.id.edtMensaje);
         txvMensaje = (TextView)findViewById(R.id.txvMensaje);
+        txvUser = (TextView)findViewById(R.id.txvUser);
         btnEnviar = (ImageView)findViewById(R.id.btnEnviar);
 
         //recogemos el alias
@@ -70,26 +73,31 @@ public class ChatActivity extends AppCompatActivity {
 
         root = FirebaseDatabase.getInstance().getReference().child(nombreSala);
 
-        //Método que envia un mensaje
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Map<String,Object> map = new HashMap<String, Object>();
-                temp_key = root.push().getKey();
-                root.updateChildren(map);
+                mandaMensaje();
 
-                DatabaseReference message_root = root.child(temp_key);
-                Map<String,Object> map2 = new HashMap<String, Object>();
+            }
+        });
 
-                //Esto es lo que escribimos en la vista
-                //map2.put("nombre", alias);
-                map2.put("nombre", alias);
-                map2.put("mensaje", edtMensaje.getText().toString());
-                message_root.updateChildren(map2);
+        /**
+         * Envia un mensaje mediante la tecla enter del teclado
+         */
+        edtMensaje.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
 
-                edtMensaje.setText("");
+                if (keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyCode == KeyEvent.KEYCODE_ENTER) {
 
+                    mandaMensaje();
+
+                    return true;
+                }
+
+                return false;
             }
         });
 
@@ -123,6 +131,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     /**
+     * Método que escribe el mensaje en la lista
      *
      * @param dataSnapshot
      */
@@ -130,14 +139,36 @@ public class ChatActivity extends AppCompatActivity {
 
         Iterator i = dataSnapshot.getChildren().iterator();
 
-        while (i.hasNext()){
 
-            chatMensaje = (String)((DataSnapshot)i.next()).getValue();
-            chatNombreUsuario = (String)((DataSnapshot)i.next()).getValue();
 
-            txvMensaje.append(chatNombreUsuario + " : " + chatMensaje + " \n");
-        }
+            chatMensaje = (String) ((DataSnapshot) i.next()).getValue();
+            chatNombreUsuario = (String) ((DataSnapshot) i.next()).getValue();
 
+            txvUser.append(chatNombreUsuario + " : " + " \n");
+            txvMensaje.append(chatMensaje + " \n");
+
+
+            //txvMensaje.append(chatNombreUsuario + " : " + chatMensaje + " \n");
+
+    }
+
+    /**
+     * Método para mandar un mensaje
+     */
+    public void mandaMensaje(){
+
+        Map<String,Object> map = new HashMap<String, Object>();
+        temp_key = root.push().getKey();
+        root.updateChildren(map);
+
+        DatabaseReference message_root = root.child(temp_key);
+        Map<String,Object> map2 = new HashMap<String, Object>();
+
+        map2.put("nombre", alias);
+        map2.put("mensaje", edtMensaje.getText().toString());
+        message_root.updateChildren(map2);
+
+        edtMensaje.setText("");
 
     }
 

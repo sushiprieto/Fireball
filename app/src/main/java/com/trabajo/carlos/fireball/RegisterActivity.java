@@ -97,10 +97,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if (view == btnRegistroGuay){
 
             progressGenerator.start(btnRegistroGuay);
-            btnRegistroGuay.setEnabled(false);
-            edtEmail.setEnabled(false);
-            edtEmailConfi.setEnabled(false);
-            edtPass.setEnabled(false);
+            //btnRegistroGuay.setEnabled(false);
+            //edtEmail.setEnabled(false);
+            //edtEmailConfi.setEnabled(false);
+            //edtPass.setEnabled(false);
 
         }
 

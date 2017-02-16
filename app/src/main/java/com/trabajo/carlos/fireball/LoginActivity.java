@@ -85,9 +85,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (view == btnRegistroGuay){
 
             progressGenerator.start(btnRegistroGuay);
-            btnRegistroGuay.setEnabled(false);
-            edtEmailLog.setEnabled(false);
-            edtPassLog.setEnabled(false);
+            //btnRegistroGuay.setEnabled(false);
+            //edtEmailLog.setEnabled(false);
+            //edtPassLog.setEnabled(false);
 
         }
 
