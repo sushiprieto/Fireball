@@ -1,6 +1,7 @@
 package com.trabajo.carlos.fireball;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.trabajo.carlos.fireball.utils.SQLiteHelper;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +46,10 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<String> listadoSalas = new ArrayList<>();
 
     private String alias = "";
+
+    private String aliasRecibido = null;
+
+    private SQLiteHelper ddbbHelper;
 
     private DatabaseReference root = FirebaseDatabase.getInstance().getReference().getRoot();
 
@@ -73,9 +80,24 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         //Recogemos el alias
         //alias = getIntent().getExtras().get("alias").toString();
 
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                aliasRecibido = null;
+            } else {
+                aliasRecibido = extras.getString("alias");
+            }
+        } else {
+            aliasRecibido = (String) savedInstanceState.getSerializable("alias");
+        }
+
+
+
+
+
         //Establecemos el titulo de la actividad
-        setTitle(usuario.getEmail());
-        //setTitle(alias);
+        //setTitle(usuario.getEmail());
+        setTitle(aliasRecibido);
 
         //txvShowAlias.setText(alias);
 

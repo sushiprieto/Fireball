@@ -2,6 +2,7 @@ package com.trabajo.carlos.fireball;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.trabajo.carlos.fireball.utils.SQLiteHelper;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, ProgressGenerator.OnCompleteListener{
 
@@ -33,6 +35,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public static final String EXTRAS_ENDLESS_MODE = "EXTRAS_ENDLESS_MODE";
 
     private FirebaseAuth autenti;
+
+    private String alias = null;
+
+    //private SQLiteHelper ddbbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +116,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         String email = edtEmailLog.getText().toString().trim();
         final String password = edtPassLog.getText().toString().trim();
-        final String alias = edtAlias.getText().toString().trim();
+        alias = edtAlias.getText().toString().trim();
 
         //Comprobamos si el correo o la contraseña esta vacio
         if (TextUtils.isEmpty(email)){
@@ -133,11 +139,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     //Creamos un intent con un putExtra para enviar el dato del alias
                     Intent envioAlias = new Intent(getApplicationContext(), RoomActivity.class);
-                    //Intent envioAlias2 = new Intent(getApplicationContext(), ChatActivity.class);
-                    // TODO: 13/02/2017 Arreglar envio alias 
-                    envioAlias.putExtra("alias", alias);
-                    //envioAlias2.putExtra("alias2", alias);
+
+                    // TODO: 13/02/2017 Arreglar envio alias
+                    //Envio de alias mediante un bundle
+                    //envioAlias.putExtra("alias", alias);
+
+
+                    //Insertamos el alias en la bbdd
+                    //ddbbHelper.insertarAlias(alias);
+
+
                     startActivity(envioAlias);
+
                     finish();
 
                 }else {

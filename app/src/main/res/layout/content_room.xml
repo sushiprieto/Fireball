@@ -36,6 +36,20 @@
         android:layout_above="@+id/edtSala"
         android:layout_below="@+id/relative" />
 
+    <!--<me.thanel.swipeactionview.SwipeActionView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lsvSalas">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end"
+            android:src="@drawable/delete"/>
+
+
+    </me.thanel.swipeactionview.SwipeActionView>-->
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
